@@ -9,8 +9,12 @@ class ItemSerializer(serializers.ModelSerializer):
         read_only_fields = ['created_at', 'updated_at']
 
     def validate(self, data):
-        # A more robust validation for uniqueness within a group, mainly for PATCH requests
-        
+        """
+        Validates that an item with the given name and group does not already exist.
+
+        Raises a ValidationError if a duplicate item is found, unless
+        the validation is for an update of the existing instance.
+        """
         # When updating an item, we need to exclude the current item from the uniqueness check.
         instance = self.instance # (None for creation)
         
