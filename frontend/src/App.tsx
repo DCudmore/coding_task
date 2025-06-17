@@ -1,46 +1,44 @@
-// frontend/src/App.tsx
-import { useState } from 'react'; // Import useState
+import { useState, useCallback } from 'react';
 import { Heading, Button, Flex, Box } from '@chakra-ui/react';
 
 import ItemTable from '@/components/ItemTable';
-import ItemForm from '@/components/ItemForm'; // Import the ItemForm
+import ItemForm from '@/components/ItemForm';
 import { Toaster } from '@/components/toaster';
-import type { Item } from './types'; // Import the Item type
+
+import type { Item } from './types';
+
 function App() {
-  const [showForm, setShowForm] = useState(false); // State to control form visibility
-  const [itemToEdit, setItemToEdit] = useState<Item | null>(null); // State to hold item being edited
+  const [showForm, setShowForm] = useState(false);
+  const [itemToEdit, setItemToEdit] = useState<Item | null>(null);
 
-  // Function to open the form for creating a new item
-  const handleAddItem = () => {
-    setItemToEdit(null); // Clear any item being edited
+  const handleAddItem = useCallback(() => {
+    setItemToEdit(null);
     setShowForm(true);
-  };
+  }, []);
 
-  // Function to open the form for editing an existing item
-  const handleEditItem = (item: Item) => {
-    setItemToEdit(item); // Set the item to be edited
+  const handleEditItem = useCallback((item: Item) => {
+    setItemToEdit(item);
     setShowForm(true);
-  };
+  }, []);
 
-  // Function to close the form and return to the table view
-  const handleCloseForm = () => {
+  const handleCloseForm = useCallback(() => {
     setShowForm(false);
-    setItemToEdit(null); // Clear itemToEdit when form closes
-  };
+    setItemToEdit(null);
+  }, []);
 
   return (
     <Box width="100%" minH="100vh">
       <Box width="100%" maxWidth="100%" px={4} py={8}>
         <Box width="100%" mb={6}>
-          <Flex 
-            width="100%" 
-            justifyContent="space-between" 
+          <Flex
+            width="100%"
+            justifyContent="space-between"
             alignItems="center"
             direction={{ base: "column", md: "row" }}
             gap={4}
           >
-            <Heading 
-              as="h1" 
+            <Heading
+              as="h1"
               fontSize={{ base: "1.5rem", md: "2rem" }}
             >
               Item Management App
