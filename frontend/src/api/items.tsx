@@ -1,9 +1,6 @@
-// frontend/src/api/items.ts
 import type { Item, CreateItemPayload, UpdateItemPayload, PaginatedResponse } from '../types';
 
-// Define your Django backend API base URL
-// Make sure this matches where your Django dev server is running
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Helper function to handle fetch responses
 async function handleResponse<T>(response: Response): Promise<T> {
@@ -15,7 +12,6 @@ async function handleResponse<T>(response: Response): Promise<T> {
 }
 
 // --- API Functions for Items ---
-
 // Get all items (paginated)
 export const getItems = async (page: number = 1): Promise<PaginatedResponse<Item>> => {
   const response = await fetch(`${API_BASE_URL}/items/?page=${page}`);
@@ -59,7 +55,6 @@ export const deleteItem = async (id: number): Promise<void> => {
   });
   // For DELETE (204 No Content), the response body is empty, so no JSON parsing needed
   if (!response.ok) {
-    const errorData = await response.json(); // Attempt to parse error for non-2xx status
-    throw new Error(errorData.detail || errorData.message || JSON.stringify(errorData));
+    return handleResponse(response);
   }
 };
