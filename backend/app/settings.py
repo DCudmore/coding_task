@@ -7,6 +7,7 @@ load_dotenv(BASE_DIR / ".env")
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG')
+FRONTEND_URL = os.getenv('FRONTEND_URL')
 ALLOWED_HOSTS = []
 
 
@@ -34,7 +35,8 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173"
+    # "http://localhost:5173"
+    FRONTEND_URL
 ]
 
 ROOT_URLCONF = 'app.urls'
