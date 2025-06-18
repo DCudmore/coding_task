@@ -75,7 +75,7 @@ For ease of setup in this development environment, the `.env` files for both the
 
 ## 🧠 Assumptions
 
-* **Uniqueness on Duplicates:** Currently, `name` and `group` fields, as defined in the Django `Item` model, are **case-sensitive** by default if a `unique=True` constraint is applied at the model level. This means "Item A" and "item a" would be considered distinct.
+* **Uniqueness on Duplicates:** Currently, `name` and `group` fields, as defined in the Django `Item` model, are **case-sensitive**. This means "Item A" and "item a" would be considered distinct.
 
 * **API Endpoints:** The application assumes standard RESTful endpoints for `/api/items/` (list/create) and `/api/items/<id>/` (retrieve/update/delete) as provided by Django REST Framework's `ModelViewSet`.
 
