@@ -68,6 +68,29 @@ Follow these steps to get the application running on your local machine.
     ```
     The frontend application should open in your browser at `http://localhost:5173/`. If it is a different URL, you'll need to update the backend .env file accordingly.
 
+### Running Backend Tests (Django)
+
+I included some basic unit tests for the backend. To execute tests for your backend:
+
+1.  **Navigate to the backend directory:**
+    ```bash
+    cd backend
+    ```
+
+2.  **Activate your virtual environment** (if not already active):
+    ```bash
+    # On Windows:
+    .\venv\Scripts\activate
+    # On macOS/Linux:
+    source venv/bin/activate
+    ```
+
+3.  **Run the tests:**
+    ```bash
+    python manage.py test
+    ```
+    This command will discover and run all tests located in `tests.py` files within your Django apps (e.g., `items/tests.py`).
+
 ## 🔒 Security Considerations (Development vs. Production)
 
 **Important Note for Deployment:**
