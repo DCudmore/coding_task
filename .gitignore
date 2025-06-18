@@ -9,6 +9,7 @@ __pycache__/
 *.pyzw
 *.pyzwz
 backend/db.sqlite3
+# backend/.env
 
 # Logs
 frontend/logs
@@ -23,4 +24,4 @@ frontend/node_modules
 frontend/dist
 frontend/dist-ssr
 frontend/*.local
-frontend/.env
+# frontend/.env
