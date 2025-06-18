@@ -1,4 +1,3 @@
-// frontend/src/components/ItemTable.tsx
 import React, { useState } from 'react';
 import {
   Box,
@@ -9,12 +8,12 @@ import {
   Flex,
   IconButton,
 } from '@chakra-ui/react';
-// Correct Chakra UI v3 Table import and usage
-import { Table } from '@chakra-ui/react'; // Table.Root, Table.Header, etc. are accessed via this import
+import { Table } from '@chakra-ui/react';
 import { MdEdit, MdDelete, MdChevronLeft, MdChevronRight, MdArrowUpward, MdArrowDownward, MdUnfoldMore } from 'react-icons/md';
 
-import { useItems, useDeleteItem } from '../hooks/useItems';
-import type { Item } from '../types'; // Using 'type' for type imports
+import { useGetItems, useDeleteItem } from '@/hooks/useItems';
+
+import type { Item } from '../types';
 import { Tooltip } from "./Tooltip"
 
 const formatDate = (dateString: string) => {
@@ -29,7 +28,7 @@ const formatDate = (dateString: string) => {
 };
 
 interface ItemTableProps {
-  onEdit: (item: Item) => void; // Callback when edit button is clicked
+  onEdit: (item: Item) => void;
 }
 
 type SortField = 'name' | 'group' | 'created_at' | 'updated_at';
@@ -39,7 +38,7 @@ const ItemTable: React.FC<ItemTableProps> = ({ onEdit }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortField, setSortField] = useState<SortField>('updated_at');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
-  const { data, isLoading, isError, error } = useItems(currentPage);
+  const { data, isLoading, isError, error } = useGetItems(currentPage);
   const deleteMutation = useDeleteItem();
 
   const handleSort = (field: SortField) => {
@@ -99,7 +98,7 @@ const ItemTable: React.FC<ItemTableProps> = ({ onEdit }) => {
   }
 
   const { results, count, next, previous } = data;
-  const totalPages = Math.ceil(count / 10); // Assuming page_size = 10 from your backend
+  const totalPages = Math.ceil(count / 10);
 
   const sortedResults = [...results].sort((a, b) => {
     const multiplier = sortDirection === 'asc' ? 1 : -1;
@@ -119,13 +118,12 @@ const ItemTable: React.FC<ItemTableProps> = ({ onEdit }) => {
 
   return (
     <Box>
-      {/* Use Table.Root and its sub-components for Chakra UI v3 */}
       <Table.Root width="100%">
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeader 
-              width="25%" 
-              cursor="pointer" 
+            <Table.ColumnHeader
+              width="25%"
+              cursor="pointer"
               onClick={() => handleSort('name')}
               _hover={{ bg: 'gray.50' }}
             >
@@ -134,8 +132,8 @@ const ItemTable: React.FC<ItemTableProps> = ({ onEdit }) => {
                 <SortIcon field="name" />
               </Flex>
             </Table.ColumnHeader>
-            <Table.ColumnHeader 
-              width="20%" 
+            <Table.ColumnHeader
+              width="20%"
               cursor="pointer"
               onClick={() => handleSort('group')}
               _hover={{ bg: 'gray.50' }}
@@ -145,9 +143,9 @@ const ItemTable: React.FC<ItemTableProps> = ({ onEdit }) => {
                 <SortIcon field="group" />
               </Flex>
             </Table.ColumnHeader>
-            <Table.ColumnHeader 
-              width="25%" 
-              textAlign="right" 
+            <Table.ColumnHeader
+              width="25%"
+              textAlign="right"
               pr={{ base: 4, md: 8 }}
               cursor="pointer"
               onClick={() => handleSort('created_at')}
@@ -158,9 +156,9 @@ const ItemTable: React.FC<ItemTableProps> = ({ onEdit }) => {
                 <SortIcon field="created_at" />
               </Flex>
             </Table.ColumnHeader>
-            <Table.ColumnHeader 
-              width="25%" 
-              textAlign="right" 
+            <Table.ColumnHeader
+              width="25%"
+              textAlign="right"
               pr={{ base: 4, md: 8 }}
               cursor="pointer"
               onClick={() => handleSort('updated_at')}
@@ -233,7 +231,7 @@ const ItemTable: React.FC<ItemTableProps> = ({ onEdit }) => {
             <MdChevronLeft style={{ marginRight: '4px' }} />
             Previous
           </Button>
-          
+
           <Flex align="center" gap={2}>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
               <Button

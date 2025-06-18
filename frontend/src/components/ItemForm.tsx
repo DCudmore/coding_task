@@ -1,4 +1,3 @@
-// frontend/src/components/ItemForm.tsx
 import React, { useEffect } from 'react';
 import {
     Box,
@@ -13,11 +12,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
-import { useCreateItem, useUpdateItem } from '../hooks/useItems';
-import type { Item } from '../types'; // Keep type for Item and CreateItemPayload
-import { ItemGroup } from '../types'; // NEW: Import ItemGroup as a regular value
+import { useCreateItem, useUpdateItem } from '@/hooks/useItems';
 
-// --- Define Zod Schema for Validation ---
+import type { Item } from '../types';
+import { ItemGroup } from '../types';
+
 const itemFormSchema = z.object({
     name: z.string().min(1, 'Name is required'),
     group: z.nativeEnum(ItemGroup, {
@@ -48,10 +47,6 @@ const ItemForm: React.FC<ItemFormProps> = ({ itemToEdit, onClose }) => {
         formState: { errors },
     } = useForm<ItemFormData>({
         resolver: zodResolver(itemFormSchema),
-        defaultValues: {
-            name: itemToEdit?.name || '',
-            group: itemToEdit?.group || ItemGroup.PRIMARY,
-        },
     });
 
     useEffect(() => {
@@ -116,7 +111,14 @@ const ItemForm: React.FC<ItemFormProps> = ({ itemToEdit, onClose }) => {
                     </Field.Root>
 
                     <Flex justifyContent="flex-end">
-                        <Button variant="outline" mr={3} onClick={onClose}>
+                        <Button 
+                        variant="outline"
+                        bg="red.400"
+                        color="white" 
+                        _hover={{ bg: 'red.500' }}
+                        mr={3} 
+                        onClick={onClose}
+                        >
                             Cancel
                         </Button>
                         <Button

@@ -12,9 +12,13 @@ function App() {
   const [itemToEdit, setItemToEdit] = useState<Item | null>(null);
 
   const handleAddItem = useCallback(() => {
-    setItemToEdit(null);
-    setShowForm(true);
-  }, []);
+    if (showForm) {
+      setShowForm(false);
+    } else {
+      setItemToEdit(null);
+      setShowForm(true);
+    }
+  }, [showForm]);
 
   const handleEditItem = useCallback((item: Item) => {
     setItemToEdit(item);
@@ -45,7 +49,7 @@ function App() {
             </Heading>
             <Button
               variant="solid"
-              bg="orange.500"
+              bg={showForm ? 'orange.600' : `orange.500`}
               color="white"
               _hover={{ bg: 'orange.600' }}
               size="md"

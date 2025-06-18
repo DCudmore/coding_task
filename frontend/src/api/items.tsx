@@ -2,7 +2,6 @@ import type { Item, CreateItemPayload, UpdateItemPayload, PaginatedResponse } fr
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-// Helper function to handle fetch responses
 async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
     const errorData = await response.json(); // Attempt to parse error message from backend
@@ -11,20 +10,10 @@ async function handleResponse<T>(response: Response): Promise<T> {
   return response.json();
 }
 
-// --- API Functions for Items ---
-// Get all items (paginated)
 export const getItems = async (page: number = 1): Promise<PaginatedResponse<Item>> => {
   const response = await fetch(`${API_BASE_URL}/items/?page=${page}`);
   return handleResponse<PaginatedResponse<Item>>(response);
 };
-
-// Get a single item by ID
-export const getItemById = async (id: number): Promise<Item> => {
-  const response = await fetch(`${API_BASE_URL}/items/${id}/`);
-  return handleResponse<Item>(response);
-};
-
-// Create a new item
 export const createItem = async (data: CreateItemPayload): Promise<Item> => {
   const response = await fetch(`${API_BASE_URL}/items/`, {
     method: 'POST',
@@ -36,7 +25,6 @@ export const createItem = async (data: CreateItemPayload): Promise<Item> => {
   return handleResponse<Item>(response);
 };
 
-// Partially update an item
 export const updateItem = async (id: number, data: UpdateItemPayload): Promise<Item> => {
   const response = await fetch(`${API_BASE_URL}/items/${id}/`, {
     method: 'PATCH',
@@ -48,7 +36,6 @@ export const updateItem = async (id: number, data: UpdateItemPayload): Promise<I
   return handleResponse<Item>(response);
 };
 
-// Delete an item
 export const deleteItem = async (id: number): Promise<void> => {
   const response = await fetch(`${API_BASE_URL}/items/${id}/`, {
     method: 'DELETE',
