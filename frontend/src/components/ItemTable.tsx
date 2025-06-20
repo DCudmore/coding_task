@@ -78,10 +78,10 @@ const ItemTable: React.FC<ItemTableProps> = ({ onEdit }) => {
 
   if (isError) {
     return (
-      <Alert.Root status="error" mt={4}> {/* Use Alert.Root */}
-        <Alert.Indicator /> {/* <-- NEW: Use Alert.Indicator */}
-        <Alert.Content> {/* NEW: Wrap content in Alert.Content */}
-          <Alert.Description> {/* NEW: Use Alert.Description for the message */}
+      <Alert.Root status="error" mt={4}>
+        <Alert.Indicator />
+        <Alert.Content>
+          <Alert.Description>
             Error loading items: {error?.message || 'An unknown error occurred.'}
           </Alert.Description>
         </Alert.Content>
